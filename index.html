@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notiz App</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="notes-app">
+      <div class="sidebar">
+        <button class="create-new">Neue Notiz erstellen</button>
+
+        <div class="notes-list">
+          <div class="note-entry" data-id="1">
+            <div class="note-title">Erste Notiz</div>
+            <div class="note-content-teaser">
+              Das ist der Text der ersten Notiz
+            </div>
+            <div class="note-date">29.9.2026, 12:00:00</div>
+          </div>
+
+          <div class="note-entry" data-id="2">
+            <div class="note-title">Zweite Notiz</div>
+            <div class="note-content-teaser">
+              Das ist der Text der zweiten Notiz
+            </div>
+            <div class="note-date">29.9.2026, 12:05:00</div>
+          </div>
+
+          <div class="note-entry" data-id="3">
+            <div class="note-title">Dritte Notiz</div>
+            <div class="note-content-teaser">
+              Das ist der Text der dritten Notiz
+            </div>
+            <div class="note-date">29.9.2026, 12:10:00</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="title-and-save">
+          <input
+            type="text"
+            id="title-input"
+            placeholder="Überschrift eingeben..."
+          />
+          <button class="save-note">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25"
+              />
+            </svg>
+          </button>
+          <button class="delete-note">
+            <!-- Löschen-Icon kommt hier hinein -->
+          </button>
+        </div>
+        <textarea
+          id="content-input"
+          placeholder="Fang' an eine Notiz zu erstellen"
+        ></textarea>
+      </div>
+    </div>
+
+    <script src="notesApi.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
