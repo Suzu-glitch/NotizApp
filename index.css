@@ -62,6 +62,7 @@
   font-size: 1rem;
   cursor: pointer;
   font-family: var(--font-family);
+  transition: all 0.2s ease-in-out;
 }
 
 .create-new:hover,
@@ -107,7 +108,10 @@
   outline: none;
   font-family: var(--font-family);
 }
-
+#title-input::placeholder,
+#content-input::placeholder {
+  color: gray;
+}
 #title-input {
   font-size: 1.5rem;
   font-weight: 700;
@@ -130,8 +134,16 @@
   border-radius: 5px;
   box-shadow: 0px 0px 5px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+.note-entry:not(.selected-note) {
+  cursor: pointer;
 }
 
+.note-entry:hover,
+.selected-note {
+  background-color: rgba(var(--primary-color), 0.1);
+}
 .note-title {
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
