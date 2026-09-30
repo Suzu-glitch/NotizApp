@@ -1,35 +1,35 @@
-const notes = [
+const notesListEl = document.querySelector(".notes-list");
+
+const MOCK_NOTES = [
   {
+    id: 1,
     title: "Notiz 1",
     content: "Lorem Ipsum",
-    id: 1,
     lastUpdated: 1693149614492,
   },
   {
+    id: 2,
     title: "Notiz 2",
     content: "Lorem Ipsum",
-    id: 2,
     lastUpdated: 1693149622194,
   },
   {
+    id: 3,
     title: "Notiz 3",
     content: "Lorem Ipsum",
-    id: 3,
     lastUpdated: 1693149629935,
   },
 ];
 
-const notesListEl = document.querySelector(".notes-list");
-
 function displayNotesList(notesToShow) {
-  notesListEl.innerHTML = "";
-
   const sortedNotes = [...notesToShow].sort(
-    (a, b) => b.lastUpdated - a.lastUpdated,
+    (noteA, noteB) => noteB.lastUpdated - noteA.lastUpdated,
   );
 
+  let html = "";
+
   sortedNotes.forEach((note) => {
-    notesListEl.innerHTML += `
+    html += `
       <div class="note-entry" data-id="${note.id}">
         <div class="note-title">${note.title}</div>
         <div class="note-content-teaser">${note.content}</div>
@@ -37,6 +37,8 @@ function displayNotesList(notesToShow) {
       </div>
     `;
   });
+
+  notesListEl.innerHTML = html;
 }
 
-displayNotesList(notes);
+displayNotesList(MOCK_NOTES);
