@@ -1,26 +1,5 @@
 const notesListEl = document.querySelector(".notes-list");
 
-const MOCK_NOTES = [
-  {
-    id: 1,
-    title: "Notiz 1",
-    content: "Lorem Ipsum",
-    lastUpdated: 1693149614492,
-  },
-  {
-    id: 2,
-    title: "Notiz 2",
-    content: "Lorem Ipsum",
-    lastUpdated: 1693149622194,
-  },
-  {
-    id: 3,
-    title: "Notiz 3",
-    content: "Lorem Ipsum",
-    lastUpdated: 1693149629935,
-  },
-];
-
 function displayNotesList(notesToShow) {
   const sortedNotes = [...notesToShow].sort(
     (noteA, noteB) => noteB.lastUpdated - noteA.lastUpdated,
@@ -41,4 +20,25 @@ function displayNotesList(notesToShow) {
   notesListEl.innerHTML = html;
 }
 
-displayNotesList(MOCK_NOTES);
+displayNotesList(getNotes());
+const titleInputEl = document.querySelector("#title-input");
+const contentInputEl = document.querySelector("#content-input");
+const saveNoteButtonEl = document.querySelector(".save-note");
+
+function handleSaveNote() {
+  const title = titleInputEl.value.trim();
+  const content = contentInputEl.value.trim();
+
+  if (title === "" || content === "") {
+    alert("Bitte Titel und Inhalt eingeben.");
+    return;
+  }
+
+  addNote(title, content);
+  displayNotesList(getNotes());
+
+  titleInputEl.value = "";
+  contentInputEl.value = "";
+}
+
+saveNoteButtonEl.addEventListener("click", handleSaveNote);

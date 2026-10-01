@@ -34,3 +34,29 @@ function getNotes() {
 function saveNotes(notesToSave) {
   localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notesToSave));
 }
+function getNextId() {
+  const notes = getNotes();
+
+  if (notes.length === 0) {
+    return 1;
+  }
+
+  const ids = notes.map((note) => note.id);
+  return Math.max(...ids) + 1;
+}
+
+function addNote(title, content) {
+  const notes = getNotes();
+
+  const newNote = {
+    id: getNextId(),
+    title: title,
+    content: content,
+    lastUpdated: Date.now(),
+  };
+
+  notes.push(newNote);
+  saveNotes(notes);
+
+  return newNote;
+}
