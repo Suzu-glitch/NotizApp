@@ -31,9 +31,10 @@ function getNotes() {
   return JSON.parse(notesJson);
 }
 
-function saveNotes(notesToSave) {
+function setNotes(notesToSave) {
   localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notesToSave));
 }
+
 function getNextId() {
   const notes = getNotes();
 
@@ -45,8 +46,23 @@ function getNextId() {
   return Math.max(...ids) + 1;
 }
 
-function addNote(title, content) {
+function saveNote(title, content, id) {
   const notes = getNotes();
+
+  if (id) {
+    const noteToUpdate = notes.find((note) => note.id === id);
+
+    if (!noteToUpdate) {
+      return null;
+    }
+
+    noteToUpdate.title = title;
+    noteToUpdate.content = content;
+    noteToUpdate.lastUpdated = Date.now();
+
+    setNotes(notes);
+    return noteToUpdate;
+  }
 
   const newNote = {
     id: getNextId(),
@@ -56,7 +72,7 @@ function addNote(title, content) {
   };
 
   notes.push(newNote);
-  saveNotes(notes);
+  setNotes(notes);
 
   return newNote;
 }
