@@ -1,18 +1,24 @@
 const notesListEl = document.querySelector(".notes-list");
 let selectedNoteId = null;
-
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
 function displayNotesList(notesToShow) {
   const sortedNotes = [...notesToShow].sort(
     (noteA, noteB) => noteB.lastUpdated - noteA.lastUpdated,
   );
 
   let html = "";
-
   sortedNotes.forEach((note) => {
     html += `
       <div class="note-entry ${note.id === selectedNoteId ? "selected-note" : ""}" data-id="${note.id}">
-        <div class="note-title">${note.title}</div>
-        <div class="note-content-teaser">${note.content}</div>
+        <div class="note-title">${escapeHtml(note.title)}</div>
+        <div class="note-content-teaser">${escapeHtml(note.content)}</div>
         <div class="note-date">${new Date(note.lastUpdated).toLocaleString("de-DE")}</div>
       </div>
     `;
@@ -25,6 +31,7 @@ displayNotesList(getNotes());
 
 const titleInputEl = document.querySelector("#title-input");
 const contentInputEl = document.querySelector("#content-input");
+const createNewButtonEl = document.querySelector(".create-new");
 const saveNoteButtonEl = document.querySelector(".save-note");
 const deleteNoteButtonEl = document.querySelector(".delete-note");
 function handleSaveNote() {
@@ -87,3 +94,4 @@ function handleDeleteNote() {
 }
 
 deleteNoteButtonEl.addEventListener("click", handleDeleteNote);
+createNewButtonEl.addEventListener("click", resetNoteSelection);
