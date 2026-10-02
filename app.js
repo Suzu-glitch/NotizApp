@@ -1,5 +1,19 @@
 const notesListEl = document.querySelector(".notes-list");
+const titleInputEl = document.querySelector("#title-input");
+const contentInputEl = document.querySelector("#content-input");
+const saveNoteButtonEl = document.querySelector(".save-note");
+const deleteNoteButtonEl = document.querySelector(".delete-note");
+const createNewButtonEl = document.querySelector(".create-new");
+
 let selectedNoteId = null;
+
+saveNoteButtonEl.addEventListener("click", handleSaveNote);
+notesListEl.addEventListener("click", handleNoteClick);
+deleteNoteButtonEl.addEventListener("click", handleDeleteNote);
+createNewButtonEl.addEventListener("click", resetNoteSelection);
+
+displayNotesList(getNotes());
+
 function escapeHtml(text) {
   return String(text)
     .replace(/&/g, "&amp;")
@@ -8,6 +22,7 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
+
 function displayNotesList(notesToShow) {
   const sortedNotes = [...notesToShow].sort(
     (noteA, noteB) => noteB.lastUpdated - noteA.lastUpdated,
@@ -27,13 +42,6 @@ function displayNotesList(notesToShow) {
   notesListEl.innerHTML = html;
 }
 
-displayNotesList(getNotes());
-
-const titleInputEl = document.querySelector("#title-input");
-const contentInputEl = document.querySelector("#content-input");
-const createNewButtonEl = document.querySelector(".create-new");
-const saveNoteButtonEl = document.querySelector(".save-note");
-const deleteNoteButtonEl = document.querySelector(".delete-note");
 function handleSaveNote() {
   const title = titleInputEl.value.trim();
   const content = contentInputEl.value.trim();
@@ -52,18 +60,14 @@ function handleSaveNote() {
   }
 }
 
-saveNoteButtonEl.addEventListener("click", handleSaveNote);
-
 function handleNoteClick(event) {
   const noteEntryEl = event.target.closest(".note-entry");
-
   if (!noteEntryEl) {
     return;
   }
 
   const noteId = Number(noteEntryEl.dataset.id);
   const clickedNote = getNotes().find((savedNote) => savedNote.id === noteId);
-
   if (!clickedNote) {
     return;
   }
@@ -71,16 +75,13 @@ function handleNoteClick(event) {
   selectedNoteId = clickedNote.id;
   titleInputEl.value = clickedNote.title;
   contentInputEl.value = clickedNote.content;
-
   displayNotesList(getNotes());
 }
 
-notesListEl.addEventListener("click", handleNoteClick);
 function resetNoteSelection() {
   selectedNoteId = null;
   titleInputEl.value = "";
   contentInputEl.value = "";
-
   displayNotesList(getNotes());
 }
 
@@ -92,6 +93,3 @@ function handleDeleteNote() {
   deleteNote(selectedNoteId);
   resetNoteSelection();
 }
-
-deleteNoteButtonEl.addEventListener("click", handleDeleteNote);
-createNewButtonEl.addEventListener("click", resetNoteSelection);
