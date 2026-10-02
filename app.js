@@ -26,7 +26,7 @@ displayNotesList(getNotes());
 const titleInputEl = document.querySelector("#title-input");
 const contentInputEl = document.querySelector("#content-input");
 const saveNoteButtonEl = document.querySelector(".save-note");
-
+const deleteNoteButtonEl = document.querySelector(".delete-note");
 function handleSaveNote() {
   const title = titleInputEl.value.trim();
   const content = contentInputEl.value.trim();
@@ -69,3 +69,21 @@ function handleNoteClick(event) {
 }
 
 notesListEl.addEventListener("click", handleNoteClick);
+function resetNoteSelection() {
+  selectedNoteId = null;
+  titleInputEl.value = "";
+  contentInputEl.value = "";
+
+  displayNotesList(getNotes());
+}
+
+function handleDeleteNote() {
+  if (selectedNoteId === null) {
+    return;
+  }
+
+  deleteNote(selectedNoteId);
+  resetNoteSelection();
+}
+
+deleteNoteButtonEl.addEventListener("click", handleDeleteNote);

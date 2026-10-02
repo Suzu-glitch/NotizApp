@@ -76,3 +76,10 @@ function saveNote(title, content, id) {
 
   return newNote;
 }
+function deleteNote(id) {
+  const notes = getNotes();
+
+  const remainingNotes = notes.filter((note) => note.id !== id);
+
+  setNotes(remainingNotes);
+}
