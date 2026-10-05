@@ -6,6 +6,7 @@ const deleteNoteButtonEl = document.querySelector(".delete-note");
 const createNewButtonEl = document.querySelector(".create-new");
 
 let selectedNoteId = null;
+let newNoteId = null;
 
 saveNoteButtonEl.addEventListener("click", handleSaveNote);
 notesListEl.addEventListener("click", handleNoteClick);
@@ -28,10 +29,15 @@ function displayNotesList(notesToShow) {
     (noteA, noteB) => noteB.lastUpdated - noteA.lastUpdated,
   );
 
+  if (sortedNotes.length === 0) {
+    notesListEl.innerHTML = `<p class="empty-state">Noch keine Notizen.<br />Leg gleich deine erste an!</p>`;
+    return;
+  }
+
   let html = "";
   sortedNotes.forEach((note) => {
     html += `
-      <div class="note-entry ${note.id === selectedNoteId ? "selected-note" : ""}" data-id="${note.id}">
+      <div class="note-entry ${note.id === selectedNoteId ? "selected-note" : ""} ${note.id === newNoteId ? "fade-in-down" : ""}" data-id="${note.id}">
         <div class="note-title">${escapeHtml(note.title)}</div>
         <div class="note-content-teaser">${escapeHtml(note.content)}</div>
         <div class="note-date">${new Date(note.lastUpdated).toLocaleString("de-DE")}</div>
@@ -40,6 +46,7 @@ function displayNotesList(notesToShow) {
   });
 
   notesListEl.innerHTML = html;
+  newNoteId = null;
 }
 
 function handleSaveNote() {
@@ -51,7 +58,12 @@ function handleSaveNote() {
     return;
   }
 
-  saveNote(title, content, selectedNoteId);
+  const savedNote = saveNote(title, content, selectedNoteId);
+
+  if (selectedNoteId === null && savedNote) {
+    newNoteId = savedNote.id;
+  }
+
   displayNotesList(getNotes());
 
   if (selectedNoteId === null) {
