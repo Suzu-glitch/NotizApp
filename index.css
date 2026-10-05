@@ -271,3 +271,23 @@ button:focus-visible {
   border: 2px dashed rgba(0, 0, 0, 0.15);
   border-radius: 5px;
 }
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-down {
+  animation: fade-in-down 0.3s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-down {
+    animation: none;
+  }
+}
