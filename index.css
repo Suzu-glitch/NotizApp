@@ -192,3 +192,32 @@
     overflow: auto;
   }
 }
+
+.main-content {
+  background-color: #fffdf5;
+}
+
+#title-input,
+#content-input {
+  background-color: transparent;
+}
+
+#title-input {
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+#content-input {
+  --line-height: 2.5rem;
+  line-height: var(--line-height);
+  padding-left: 1rem;
+  border-left: 2px solid rgba(220, 80, 80, 0.5);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--line-height) - 1px),
+    rgba(0, 0, 0, 0.12) calc(var(--line-height) - 1px),
+    rgba(0, 0, 0, 0.12) var(--line-height)
+  );
+  background-attachment: local;
+}
